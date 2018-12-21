@@ -8,7 +8,7 @@ import javax.security.auth.login.LoginException;
 public class CharacterManagerMain extends ListenerAdapter {
     public static void main(String[] args) throws LoginException {
         JDABuilder builder = new JDABuilder(AccountType.BOT);
-        builder.setToken("NTI1MTI4MzI3NzYyMTQ5Mzkx.DvyHqw.o4WtKRX5KOgQOdHfypzhiaNQd18");
+        builder.setToken(System.getenv("BOT_TOKEN"));
         builder.addEventListener(new CharacterManagerMain());
         builder.build();
     }

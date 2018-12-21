@@ -116,6 +116,7 @@
   </component>
   <component name="PropertiesComponent">
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1545363263311" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.2" />
@@ -135,6 +136,9 @@
   </component>
   <component name="RunManager">
     <configuration name="CharacterManagerMain" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <envs>
+        <env name="BOT_TOKEN" value="NTI1Nzg3MTAyOTY1NzkyNzg4.Dv7tCw.YdOTc4QYlj8sr9Mnv8LsyQbivRk" />
+      </envs>
       <option name="MAIN_CLASS_NAME" value="CharacterManagerMain" />
       <module name="com.github.larsonmichael.JDACharacterManager.main" />
       <method v="2">
