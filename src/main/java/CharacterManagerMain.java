@@ -35,7 +35,11 @@ public class CharacterManagerMain extends ListenerAdapter {
                     event.getMessage().getContentDisplay()
             );
         }
-
-        mainCommandHandler.processCommand(event);
+        try {
+            mainCommandHandler.processCommand(event);
+        } catch (Exception e) {
+            //no need for a single exception to crash out our program
+            System.out.println(e.getMessage());
+        }
     }
 }

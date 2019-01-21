@@ -6,16 +6,20 @@ import net.dv8tion.jda.core.events.message.MessageReceivedEvent;
 public class MainCommandHandler {
     private final CharacterCommandHandler characterCommandHandler;
     private final HelpCommandHandler helpCommandHandler;
+    private final StatsCommandHandler statsCommandHandler;
 
     @Inject
     MainCommandHandler(CharacterCommandHandler characterCommandHandler,
-                       HelpCommandHandler helpCommandHandler) {
+                       HelpCommandHandler helpCommandHandler,
+                       StatsCommandHandler statsCommandHandler) {
         this.characterCommandHandler = characterCommandHandler;
         this.helpCommandHandler = helpCommandHandler;
+        this.statsCommandHandler =  statsCommandHandler;
     }
 
     public void processCommand(MessageReceivedEvent event) {
-        String command = event.getMessage().getContentRaw();
+        //Filter the command to eliminate compound spaces and trailing/leading whitespace
+        String command = event.getMessage().getContentRaw().replaceAll("( )+", " ").trim();
         String output = null;
 
         if (command.matches(CommandRegex.CHARACTER_COMMAND_MATCHING_REGEX)) {
@@ -26,12 +30,16 @@ public class MainCommandHandler {
             output = helpCommandHandler.handleCommand(event, command);
         }
 
+        if (command.matches(CommandRegex.STATS_COMMAND_MATCHING_REGEX)) {
+            output = statsCommandHandler.handleCommand(event, getArgs(command, CommandRegex.STATS_COMMAND_STRIPPING_REGEX));
+        }
+
         if (output != null){
             event.getChannel().sendMessage(output).queue();
         }
     }
 
     private String getArgs(String command, String commandStripRegex) {
-        return command.replaceFirst(commandStripRegex, "");
+        return command.replaceFirst(commandStripRegex, "").trim();
     }
 }

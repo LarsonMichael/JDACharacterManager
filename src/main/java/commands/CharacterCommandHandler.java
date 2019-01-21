@@ -13,10 +13,11 @@ public class CharacterCommandHandler implements CommandHandler {
     private final String helpText = "The character command sets your current character on this server by name.\n" +
             "If the character does not exist it is created with default stats and set as your current character.\n\n" +
             "The character command has the following structure:\n" +
-            "!character [ARGS] character_name\n\n" +
-            "The character command accepts the following [ARGS]:\n" +
-            "-h, --help : prints the help text for the character command and then exits without attempting character creation\n" +
-            "The remaining input is interpreted as the character name, spaces and special characters are allowed. Character names are case sensitive";
+            "!character [FLAGS] character_name\n\n" +
+            "The character command accepts the following [FLAGS]:\n" +
+            "-h, --help : prints the help text for the character command and then exits without attempting character creation\n\n" +
+            "The remaining input is interpreted as the character name, spaces and special characters are allowed. Character names are case sensitive\n" +
+            "Attempting to start a character name with  \"-\" will cause an error.";
 
     private final DatabaseConnectionProvider databaseConnectionProvider;
 
@@ -27,14 +28,17 @@ public class CharacterCommandHandler implements CommandHandler {
 
     public String handleCommand(MessageReceivedEvent event, String args) {
        System.out.println("Received !Create command with arguments : " + args);
-       if (args.matches(ArgsRegex.HELP_LONG_ARG_MATCHING_REGEX)|| args.matches(ArgsRegex.HELP_SHORT_ARG_MATCHING_REGEX)) {
+       if (args.matches(FlagsRegex.HELP_LONG_FLAG_MATCHING_REGEX)|| args.matches(FlagsRegex.HELP_SHORT_FLAG_MATCHING_REGEX)) {
            return helpText;
        }
-        if (switchCharacter(event.getGuild().getIdLong(), event.getAuthor().getIdLong(), args)) {
-                return "Current character for  " + event.getAuthor().getName() + ": " + args;
-            } else {
-                return "Failed to switch character context for " + event.getAuthor().getName() + " to character: " + args;
-            }
+       if (args.startsWith("-")) {
+           return  "\"" + args + "\" is not a valid set of flags or arguments for !character. Use !character -h for information regarding the correct use of this command";
+       }
+       if (switchCharacter(event.getGuild().getIdLong(), event.getAuthor().getIdLong(), args)) {
+           return "Current character for  " + event.getAuthor().getName() + ": " + args;
+       } else {
+           return "Failed to switch character context for " + event.getAuthor().getName() + " to character: " + args;
+       }
     }
 
     private boolean switchCharacter(long guildId, long userId, String character_name) {
