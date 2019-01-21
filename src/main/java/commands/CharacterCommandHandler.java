@@ -11,9 +11,9 @@ import java.sql.SQLException;
 
 public class CharacterCommandHandler implements CommandHandler {
     private final String helpText = "The character command sets your current character on this server by name.\n" +
-            "If the character does not exist it is created with default stats and set as your current character.\n" +
+            "If the character does not exist it is created with default stats and set as your current character.\n\n" +
             "The character command has the following structure:\n" +
-            "!character [ARGS] character_name\n" +
+            "!character [ARGS] character_name\n\n" +
             "The character command accepts the following [ARGS]:\n" +
             "-h, --help : prints the help text for the character command and then exits without attempting character creation\n" +
             "The remaining input is interpreted as the character name, spaces and special characters are allowed. Character names are case sensitive";
